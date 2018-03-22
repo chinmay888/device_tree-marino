@@ -1,0 +1,130 @@
+# MTK Hardware
+BOARD_HAS_MTK_HARDWARE := true
+
+# Display
+USE_OPENGL_RENDERER := true
+TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+BOARD_EGL_CFG :=  $(LOCAL_PATH)/prebuilt/etc/egl.cfg
+
+# Boot animation
+TARGET_BOOTANIMATION_MULTITHREAD_DECODE := true
+
+# RIL
+BOARD_RIL_CLASS := ../../../device/lenovo/marino_f/ril
+BOARD_CONNECTIVITY_MODULE := conn_soc
+
+# Sensors
+BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
+
+# Bionic
+
+# Enable Minikin text layout engine (will be the default soon)
+USE_MINIKIN := true
+
+# Configure jemalloc for low memory
+MALLOC_SVELTE := true
+
+# Bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
+TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+
+# Audio
+BOARD_USES_MTK_AUDIO := true
+USE_XML_AUDIO_POLICY_CONF := 1
+
+# Wifi
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_mt66xx
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_mt66xx
+WIFI_DRIVER_FW_PATH_PARAM := "/dev/wmtWifi"
+WIFI_DRIVER_FW_PATH_STA := STA
+WIFI_DRIVER_FW_PATH_AP := AP
+WIFI_DRIVER_FW_PATH_P2P := P2P
+
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
+BOARD_HAVE_BLUETOOTH_MTK := true
+MTK_BT_SUPPORT := yes
+
+MTK_MEDIA_PROFILES := true
+BOARD_USES_MTK_MEDIA_PROFILES := true
+
+# CM hardware
+BOARD_HARDWARE_CLASS := $(LOCAL_PATH)/cmhw
+
+# MTK Hardware
+BOARD_USES_MTK_HARDWARE := true
+BOARD_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+
+# GPS
+BOARD_GPS_LIBRARIES := true
+BOARD_MEDIATEK_USES_GPS := true
+
+
+# Charger
+BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
+
+# Recovery
+RECOVERY_VARIANT := twrp
+
+# TWRP
+ifeq ($(RECOVERY_VARIANT), twrp)
+TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
+TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
+TW_NO_REBOOT_BOOTLOADER := true
+TW_THEME := portrait_hdpi
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
+TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+TW_INCLUDE_CRYPTO := true
+TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 80
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_NO_USB_STORAGE := true
+BOARD_USE_FRAMEBUFFER_ALPHA_CHANNEL := true
+TARGET_DISABLE_TRIPLE_BUFFERING := false
+TW_USE_TOOLBOX := true
+TW_FLASH_FROM_STORAGE := true
+TW_NEW_ION_HEAP := true
+TWHAVE_SELINUX := true
+TW_THEME := portrait_hdpi
+TW_EXCLUDE_SUPERSU := true
+TW_EXTRA_LANGUAGES := true
+TW_NO_SCREEN_BLANK := true
+
+
+# Time Zone data for Recovery
+PRODUCT_COPY_FILES += \
+    bionic/libc/zoneinfo/tzdata:recovery/root/system/usr/share/zoneinfo/tzdata
+else
+# CWM
+BOARD_RECOVERY_SWIPE := true
+BOARD_SUPPRESS_EMMC_WIPE := true
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+endif
+
+# Charger
+BOARD_CHARGER_SHOW_PERCENTAGE := true
+
+# SELinux
+BOARD_SEPOLICY_DIRS := \
+    $(LOCAL_PATH)/sepolicy
+
+# DEXPREOPT
+ifeq ($(TARGET_BUILD_VARIANT),user)
+WITH_DEXPREOPT := true
+DONT_DEXPREOPT_PREBUILTS := true
+endif
